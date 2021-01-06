@@ -754,6 +754,13 @@ PlusStatus vtkPlusAndorVideoSource::AcquireCorrectionFrame(const std::string cor
 }
 
 //-----------------------------------------------------------------------------
+PlusStatus vtkPlusAndorVideoSource::StopAcquisition()
+{
+  checkStatus(::AbortAcquisition(), "StopAcquisition");
+  return PLUS_SUCCESS;
+}
+
+//-----------------------------------------------------------------------------
 PlusStatus vtkPlusAndorVideoSource::SetBadPixelCorrectionImage(const std::string badPixelFilePath)
 {
   try
