@@ -20,6 +20,7 @@ cv::Mat cvCameraIntrinsics;
 cv::Mat cvDistortionCoefficients;
 cv::Mat cvBadPixelImage;
 cv::Mat cvFlatCorrection;
+cv::Mat cvResizedFlatCorrection;
 cv::Mat cvBiasDarkCorrection;
 using CellIndices = std::vector<uint>;
 std::map<int, CellIndices> cellsToCorrect;
@@ -735,7 +736,8 @@ void vtkPlusAndorVideoSource::ApplyFrameCorrections(int binning)
   cv::undistort(floatImage, result, cvCameraIntrinsics, cvDistortionCoefficients);
   LOG_INFO("Applied lens distortion correction");
 
-  if (cvFlatCorrection.cols != frameSize[0] || cvFlatCorrection.rows != frameSize[1])
+  cv::resize(cvFlatCorrection, cvResizedFlatCorrection, cvFlatCorrection.size(), 1.0 / binning, 1.0 / binning);
+  if (cvResizedFlatCorrection.cols != frameSize[0] || cvResizedFlatCorrection.rows != frameSize[1])
   {
     LOG_ERROR("FlatCorrectionImage size " << cvFlatCorrection.size()
       << " does not the current frame size " << frameSize[0] << " x " << frameSize[1]);
@@ -743,7 +745,7 @@ void vtkPlusAndorVideoSource::ApplyFrameCorrections(int binning)
   else
   {
     // Divide the image by the 32-bit floating point correction image
-    cv::divide(result, cvFlatCorrection, result, 1, CV_32FC1);
+    cv::divide(result, cvResizedFlatCorrection, result, 1, CV_32FC1);
     LOG_INFO("Applied multiplicative flat correction");
   }
 
