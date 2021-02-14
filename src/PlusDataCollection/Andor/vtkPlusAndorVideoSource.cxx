@@ -736,11 +736,11 @@ void vtkPlusAndorVideoSource::ApplyFrameCorrections(int binning)
   cv::undistort(floatImage, result, cvCameraIntrinsics, cvDistortionCoefficients);
   LOG_INFO("Applied lens distortion correction");
 
-  cv::resize(cvFlatCorrection, cvResizedFlatCorrection, cvFlatCorrection.size(), 1.0 / binning, 1.0 / binning);
+  cv::resize(cvFlatCorrection, cvResizedFlatCorrection, floatImage.size(), 0, 0, cv::INTER_CUBIC);
   if (cvResizedFlatCorrection.cols != frameSize[0] || cvResizedFlatCorrection.rows != frameSize[1])
   {
-    LOG_ERROR("FlatCorrectionImage size " << cvFlatCorrection.size()
-      << " does not the current frame size " << frameSize[0] << " x " << frameSize[1]);
+    LOG_ERROR("Flat correction image size " << cvFlatCorrection.size()
+      << " does not match the current frame size " << frameSize[0] << " x " << frameSize[1]);
   }
   else
   {
@@ -966,6 +966,8 @@ PlusStatus vtkPlusAndorVideoSource::SetBiasDarkCorrectionImage(const std::string
 // ----------------------------------------------------------------------------
 PlusStatus vtkPlusAndorVideoSource::SetFlatCorrectionImage(std::string flatFilePath)
 {
+  int x, y;
+  checkStatus(GetDetector(&x, &y), "GetDetector"); // full sensor size
   try
   {
     cvFlatCorrection = cv::imread(flatFilePath, cv::IMREAD_UNCHANGED);
@@ -973,10 +975,10 @@ PlusStatus vtkPlusAndorVideoSource::SetFlatCorrectionImage(std::string flatFileP
     {
       throw "Flat correction image empty!";
     }
-    if (cvFlatCorrection.cols != frameSize[0] || cvFlatCorrection.rows != frameSize[1])
+    if (cvFlatCorrection.cols != x || cvFlatCorrection.rows != y)
     {
-      LOG_INFO("FlatCorrectionImage size " << cvFlatCorrection.size()
-        << " does not match the current frame size " << frameSize[0] << " x " << frameSize[1]);
+      LOG_ERROR("FlatCorrectionImage size " << cvFlatCorrection.size()
+        << " does not match the detector size " << x << " x " << y);
       return PLUS_FAIL;
     }
     double maxVal = 0.0;
