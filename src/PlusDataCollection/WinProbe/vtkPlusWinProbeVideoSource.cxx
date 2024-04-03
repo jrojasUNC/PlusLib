@@ -978,12 +978,7 @@ PlusStatus vtkPlusWinProbeVideoSource::InternalConnect()
   this->SetBTransmitCycleCount(m_BTransmitCycleCount);
   this->SetBTransmitFNumber(m_BTransmitFNumber);
   this->SetBApodizationFNumber(m_BApodizationFNumber);
-  if (m_BAmplitudeModulationEnabled)
-  {
-    this->SetBTXFilterCoefficientSet(m_AmpModFilterCoefficientSet);
-  } else {
-    this->SetBTXFilterCoefficientSet(m_BTXFilterCoefficientSet);
-  }  
+  this->SetBTXFilterCoefficientSet(m_BTXFilterCoefficientSet); 
 
   //setup size for DirectX image
   LOG_DEBUG("Setting output size to " << m_PrimaryFrameSize[0] << "x" << m_PrimaryFrameSize[1]);
