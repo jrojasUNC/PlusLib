@@ -86,6 +86,10 @@ public:
   static const char* GET_B_TRANSMIT_FNUMBER;
   static const char* SET_B_APODIZATION_FNUMBER;
   static const char* GET_B_APODIZATION_FNUMBER;
+  static const char* SET_B_BUBBLE_DESTRUCTION_ENABLED;
+  static const char* GET_B_BUBBLE_DESTRUCTION_ENABLED;
+  static const char* SET_B_BUBBLE_DESTRUCTION_CYCLE_COUNT;
+  static const char* GET_B_BUBBLE_DESTRUCTION_CYCLE_COUNT;
   static const char* SET_B_FILTER_COEFFICIENT_SET;
   static const char* GET_B_FILTER_COEFFICIENT_SET;
   static const char* SET_B_TX_FILTER_COEFFICIENT_SET;
@@ -333,6 +337,12 @@ public:
   void SetBApodizationFNumber(double value);
   double GetBApodizationFNumber();
 
+  void SetBBubbleDestructionEnabled(bool value);
+  bool GetBBubbleDestructionEnabled();
+
+  void SetBBubbleDestructionCycleCount(int16_t value);
+  int16_t GetBBubbleDestructionCycleCount();
+
   void SetBFilterCoefficientSet(uint8_t value);     // set which bank of filters to use (should be 3)
   uint8_t GetBFilterCoefficientSet();
 
@@ -576,6 +586,8 @@ protected:
   uint16_t m_BTransmitCycleCount = 2;
   double m_BTransmitFNumber = 3;
   double m_BApodizationFNumber = 0.5;
+  bool m_BBubbleDestructionEnabled = false;
+  int16_t m_BBubbleDestructionCycleCount = 12;
   uint8_t m_BFilterCoefficientSet = 3;        // default filter bank
   int32_t m_BTXFilterCoefficientSet = 3;      // default filter
   std::vector<vtkPlusDataSource*> m_PrimarySources;
