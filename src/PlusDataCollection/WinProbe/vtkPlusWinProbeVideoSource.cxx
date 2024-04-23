@@ -60,6 +60,7 @@ const char* vtkPlusWinProbeVideoSource::SET_M_DEPTH                  = "SetMDept
 const char* vtkPlusWinProbeVideoSource::GET_M_DEPTH                  = "GetMDepth";
 const char* vtkPlusWinProbeVideoSource::SET_DECIMATION               = "SetDecimation";
 const char* vtkPlusWinProbeVideoSource::GET_DECIMATION               = "GetDecimation";
+const char* vtkPlusWinProbeVideoSource::GET_B_PRF                    = "GetBPRF";
 const char* vtkPlusWinProbeVideoSource::SET_B_FRAME_RATE_LIMIT       = "SetBFrameRateLimit";
 const char* vtkPlusWinProbeVideoSource::GET_B_FRAME_RATE_LIMIT       = "GetBFrameRateLimit";
 const char* vtkPlusWinProbeVideoSource::SET_B_HARMONIC_ENABLED       = "SetBHarmonicEnabled";
@@ -2404,6 +2405,15 @@ PlusStatus vtkPlusWinProbeVideoSource::ARFIPush(uint8_t maximumVoltage /* = 50 *
 std::string vtkPlusWinProbeVideoSource::GetTransducerID()
 {
   return this->m_TransducerID;
+}
+
+int vtkPlusWinProbeVideoSource::GetBPRF()
+{
+  if (Connected)
+  {
+    m_BPRF = ::GetBPRF();
+  }
+  return m_BPRF;
 }
 
 void vtkPlusWinProbeVideoSource::SetBFrameRateLimit(int32_t value)

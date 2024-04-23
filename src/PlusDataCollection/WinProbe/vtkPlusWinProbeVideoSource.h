@@ -68,6 +68,7 @@ public:
   static const char* GET_M_DEPTH;
   static const char* SET_DECIMATION;
   static const char* GET_DECIMATION;
+  static const char* GET_B_PRF;
   static const char* SET_B_FRAME_RATE_LIMIT;
   static const char* GET_B_FRAME_RATE_LIMIT;
   static const char* SET_B_HARMONIC_ENABLED;
@@ -376,6 +377,8 @@ public:
   void SetMDepth(int32_t value);
   int32_t GetMDepth();
 
+  int GetBPRF();
+
   void SetBFrameRateLimit(int32_t value);
   int32_t GetBFrameRateLimit();
 
@@ -577,6 +580,7 @@ protected:
   int32_t m_MDepth = 0;
   uint8_t m_SSDecimation = 2;
   double m_FirstGainValue = 15;
+  int m_BPRF = 0;
   int32_t m_BFrameRateLimit = 0;
   bool m_BHarmonicEnabled = false;
   bool m_BBubbleContrastEnabled = false;
