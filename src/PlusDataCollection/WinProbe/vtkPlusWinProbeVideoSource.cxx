@@ -983,7 +983,6 @@ PlusStatus vtkPlusWinProbeVideoSource::InternalConnect()
   this->SetBTransmitCycleCount(m_BTransmitCycleCount);
   this->SetBTransmitFNumber(m_BTransmitFNumber);
   this->SetBApodizationFNumber(m_BApodizationFNumber);
-  this->SetBTXFilterCoefficientSet(m_BTXFilterCoefficientSet);
   this->SetBBubbleDestructionEnabled(m_BBubbleDestructionEnabled);
   this->SetBBubbleDestructionCycleCount(m_BBubbleDestructionCycleCount);
 
